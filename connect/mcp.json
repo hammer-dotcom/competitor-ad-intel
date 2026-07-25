@@ -1,0 +1,13 @@
+{
+  "_comment": "For Claude Code. Save as .mcp.json in the project root, or run: claude mcp add ad-intel -e APIFY_TOKEN=... -- python -m src.mcp_server",
+  "mcpServers": {
+    "ad-intel": {
+      "command": "python",
+      "args": ["-m", "src.mcp_server"],
+      "env": {
+        "APIFY_TOKEN": "${APIFY_TOKEN}",
+        "BRAND_NAME": "${BRAND_NAME}"
+      }
+    }
+  }
+}

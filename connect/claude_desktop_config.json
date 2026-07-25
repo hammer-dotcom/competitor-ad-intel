@@ -1,0 +1,17 @@
+{
+  "_comment": "Paste the contents of mcpServers into your existing claude_desktop_config.json. macOS: ~/Library/Application Support/Claude/claude_desktop_config.json — Windows: %APPDATA%\\Claude\\claude_desktop_config.json. Use ABSOLUTE paths; Claude Desktop does not run in your shell and has no PATH or virtualenv.",
+  "mcpServers": {
+    "ad-intel": {
+      "command": "/absolute/path/to/competitor-ad-intel/.venv/bin/python",
+      "args": ["-m", "src.mcp_server"],
+      "cwd": "/absolute/path/to/competitor-ad-intel",
+      "env": {
+        "APIFY_TOKEN": "apify_api_...",
+        "BRAND_NAME": "Your Company",
+        "DB_PATH": "data/ads.db",
+        "SLACK_BOT_TOKEN": "",
+        "SLACK_CHANNEL": "#competitive-intel"
+      }
+    }
+  }
+}

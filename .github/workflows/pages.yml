@@ -1,0 +1,58 @@
+name: publish-site
+
+# Runs after the digest workflow finishes, and on manual trigger.
+on:
+  workflow_run:
+    workflows: ["weekly-ad-intel"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install system deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y libpango-1.0-0 libpangoft2-1.0-0 libcairo2 \
+                                  libgdk-pixbuf-2.0-0 fonts-liberation
+
+      - run: pip install -r requirements.txt
+
+      # DEMO_SITE=true builds from demo/fixtures.json, so a public Pages deployment
+      # never contains a real competitor set and never touches an API key.
+      - name: Build site
+        env:
+          DEMO_SITE: ${{ vars.DEMO_SITE }}
+        run: |
+          if [ "$DEMO_SITE" = "true" ]; then
+            python -m src.demo
+          else
+            python -m src.main report --window 7 --publish
+          fi
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4

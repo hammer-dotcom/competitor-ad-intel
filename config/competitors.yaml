@@ -1,0 +1,41 @@
+# Every competitor you want tracked.
+# Meta page IDs come from the Ad Library URL: facebook.com/ads/library/?view_all_page_id=XXXX
+# LinkedIn uses the company slug from linkedin.com/company/<slug>.
+brand:
+  name: "Submit.com"
+  meta_page_ids: []
+  linkedin_slugs: ["submit-com"]
+
+defaults:
+  # redact: {"Real Client Name": "Competitor A"}   # see note at the foot of this file
+  countries: ["GB", "IE", "US"]
+  lookback_days: 30
+  max_ads_per_competitor: 60
+
+competitors:
+  - name: "SmartSimple"
+    linkedin_slugs: ["smartsimple-software"]
+    meta_page_ids: []
+    category: "grant management"
+  - name: "Submittable"
+    linkedin_slugs: ["submittable"]
+    meta_page_ids: []
+    category: "grant + awards management"
+  - name: "OpenWater"
+    linkedin_slugs: ["openwater"]
+    meta_page_ids: []
+    category: "awards + abstracts"
+  - name: "Award Force"
+    linkedin_slugs: ["award-force"]
+    meta_page_ids: []
+    category: "awards management"
+  - name: "Good Grants"
+    linkedin_slugs: ["good-grants"]
+    meta_page_ids: []
+    category: "grant management"
+
+# Optional. Any key found in published HTML is replaced by its value before the file
+# is written. Use it when the repo is public but the competitor set belongs to a client.
+# redact:
+#   "Acme Grants Ltd": "Competitor A"
+#   "Beta Awards":     "Competitor B"

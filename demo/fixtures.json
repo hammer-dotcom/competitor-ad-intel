@@ -1,0 +1,20 @@
+{
+  "note": "Fabricated ads used for the public demo deployment. Realistic in shape, invented in content. Swap the names if you want a neutral demo (Acme A/B/C).",
+  "brand": "Submit.com",
+  "synthesis": [
+    "Good Grants published survey data on applicant drop-off; that is the same data-asset lane we planned to own, and they moved first.",
+    "Submittable is running compliance-first creative aimed at public funders, overlapping our strongest claim.",
+    "SmartSimple's longest-running ad (63 days) sells review-time reduction, not features — the durable message in this category is time, not capability.",
+    "Award Force is the only advertiser using seasonal urgency. Judging-season timing is unclaimed for grant rounds."
+  ],
+  "ads": [
+    {"competitor":"SmartSimple","platform":"linkedin","hook":"Your grant round shouldn't need a spreadsheet","angle":"outcome/ROI","offer":"book-a-demo","funnel_stage":"middle","audience":"grant managers at foundations","value_props":["cut review time 60%"],"proof_used":["Used by 400+ funders"],"tone":"confident","notable":"They lead with review-time reduction, not features. Our review workflow story is comparable and unclaimed.","days":63},
+    {"competitor":"Submittable","platform":"linkedin","hook":"Fair, fast, auditable application review","angle":"compliance/security","offer":"gated-report","funnel_stage":"top","audience":"public sector programme leads","value_props":["audit trail","bias controls"],"proof_used":["SOC 2 Type II"],"tone":"institutional","notable":"Compliance-first framing aimed squarely at public funders. Worth testing against our Procurement Act angle.","days":41},
+    {"competitor":"Award Force","platform":"meta","hook":"Judging season starts in six weeks","angle":"speed-to-value","offer":"free-trial","funnel_stage":"bottom","audience":"awards programme managers","value_props":["set up in days"],"proof_used":[],"tone":"urgent","notable":"Seasonal timing hook. Their calendar pressure play is repeatable for us in Q3.","days":28},
+    {"competitor":"OpenWater","platform":"linkedin","hook":"One platform for abstracts, awards and grants","angle":"product-feature","offer":"book-a-demo","funnel_stage":"middle","audience":"associations","value_props":["single platform"],"proof_used":[],"tone":"neutral","notable":"nothing notable","days":12},
+    {"competitor":"Good Grants","platform":"linkedin","hook":"What 200 funders told us about applicant drop-off","angle":"authority/thought-leadership","offer":"gated-report","funnel_stage":"top","audience":"grant programme designers","value_props":["benchmark data"],"proof_used":["200 funders surveyed"],"tone":"research-led","notable":"A data asset play. This is the same lane as our public sector data asset — they are moving first.","days":34},
+    {"competitor":"Good Grants","platform":"linkedin","hook":"Score every application against the same rubric","angle":"product-feature","offer":"book-a-demo","funnel_stage":"middle","audience":"grant reviewers","value_props":["configurable scoring"],"proof_used":[],"tone":"plain","notable":"nothing notable","days":9},
+    {"competitor":"Submittable","platform":"linkedin","hook":"Cut administrative load on your programme team","angle":"cost-saving","offer":"consultation/audit","funnel_stage":"middle","audience":"programme directors","value_props":["fewer admin hours"],"proof_used":[],"tone":"consultative","notable":"Second angle from the same advertiser this month — they are testing cost against compliance.","days":6},
+    {"competitor":"Submit.com","platform":"linkedin","hook":"Built for UK and Irish public bodies","angle":"compliance/security","offer":"book-a-demo","funnel_stage":"middle","audience":"local authorities","value_props":["G-Cloud listed"],"proof_used":["G-Cloud"],"tone":"direct","notable":"Our own live creative, shown for comparison.","days":47}
+  ]
+}

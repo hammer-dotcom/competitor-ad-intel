@@ -1,0 +1,53 @@
+name: weekly-ad-intel
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"      # Mondays 07:00 UTC
+  workflow_dispatch:          # manual trigger for testing
+
+permissions:
+  contents: write             # so the run can commit the updated state DB
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      # WeasyPrint needs system libs for PDF rendering
+      - name: Install system deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y libpango-1.0-0 libpangoft2-1.0-0 libcairo2 libgdk-pixbuf-2.0-0
+
+      - run: pip install -r requirements.txt
+
+      - name: Run digest
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ vars.SLACK_CHANNEL }}
+          BRAND_NAME: ${{ vars.BRAND_NAME }}
+        run: python -m src.main run --window 7 --slack
+
+      - name: Archive the PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: ad-intel-pdf
+          path: out/*.pdf
+          retention-days: 90
+
+      # GitHub runners are ephemeral: without this, every week looks like week one.
+      - name: Persist state
+        run: |
+          git config user.name  "ad-intel-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add -f data/ads.db
+          git diff --quiet --cached || git commit -m "state: $(date -u +%F)"
+          git push

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ brand }} — Competitor Ad Intel, {{ digest.generated_at.strftime('%d %b %Y') }}</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap');
+
+  :root{
+    --ink:#171A1F;
+    --paper:#EFF1F0;
+    --card:#FFFFFF;
+    --rule:#CFD5D2;
+    --muted:#5C6470;
+    --accent:#7A2E3B;      /* oxblood: used only for signal */
+    --warm:#B98B1E;        /* mustard: fatigue / age */
+  }
+
+  @page{ size:A4; margin:16mm 14mm 18mm;
+    @bottom-right{ content:"page " counter(page) " / " counter(pages);
+      font-family:"IBM Plex Mono",monospace; font-size:7pt; color:#5C6470; } }
+
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--paper); color:var(--ink);
+        font-family:"Inter",-apple-system,Segoe UI,sans-serif; font-size:9.5pt; line-height:1.45; }
+
+  .eyebrow{ font-family:"IBM Plex Mono",monospace; font-size:7pt; letter-spacing:.16em;
+            text-transform:uppercase; color:var(--muted); }
+
+  /* ---- masthead ---- */
+  header{ border-bottom:1.5pt solid var(--ink); padding-bottom:8pt; margin-bottom:14pt; }
+  h1{ font-family:"Instrument Serif",Georgia,serif; font-weight:400; font-size:30pt;
+      line-height:1.02; margin:6pt 0 4pt; letter-spacing:-.01em; }
+  h1 em{ font-style:italic; color:var(--accent); }
+  .masthead-meta{ display:flex; justify-content:space-between; align-items:baseline; }
+
+  /* ---- counters strip ---- */
+  .strip{ display:flex; gap:0; border:.75pt solid var(--rule); background:var(--card);
+          margin-bottom:16pt; }
+  .strip div{ flex:1; padding:8pt 10pt; border-right:.75pt solid var(--rule); }
+  .strip div:last-child{ border-right:none; }
+  .strip b{ display:block; font-family:"IBM Plex Mono",monospace; font-size:17pt;
+            font-weight:500; line-height:1; margin-top:3pt; }
+
+  h2{ font-family:"Instrument Serif",Georgia,serif; font-weight:400; font-size:15pt;
+      margin:20pt 0 2pt; }
+  h2 + .sub{ color:var(--muted); font-size:8.5pt; margin-bottom:9pt; }
+  .rule{ height:.75pt; background:var(--ink); margin:3pt 0 10pt; }
+
+  /* ---- the read ---- */
+  .read{ background:var(--card); border-left:2.5pt solid var(--accent);
+         padding:11pt 13pt; font-size:10pt; }
+  .read ul{ margin:0; padding-left:14pt; }
+  .read li{ margin-bottom:5pt; }
+  .read li:last-child{ margin-bottom:0; }
+
+  /* ---- ad card. Signature: mono spine carrying the taxonomy code + a
+         fatigue bar whose length is literally days live. ---- */
+  .card{ display:flex; background:var(--card); border:.75pt solid var(--rule);
+         margin-bottom:7pt; page-break-inside:avoid; }
+  .spine{ width:64pt; flex:0 0 64pt; border-right:.75pt solid var(--rule);
+          padding:8pt 7pt; background:#F7F8F8; }
+  .code{ font-family:"IBM Plex Mono",monospace; font-size:6.5pt; letter-spacing:.06em;
+         color:var(--ink); text-transform:uppercase; line-height:1.5; }
+  .code span{ display:block; color:var(--muted); }
+  .age{ margin-top:7pt; }
+  .age .bar{ height:3pt; background:var(--warm); }
+  .age .n{ font-family:"IBM Plex Mono",monospace; font-size:6.5pt; color:var(--muted);
+           margin-top:2pt; }
+
+  .card-body{ padding:8pt 11pt; flex:1; }
+  .hook{ font-family:"Instrument Serif",Georgia,serif; font-size:12.5pt; line-height:1.2;
+         margin:0 0 3pt; }
+  .who{ font-family:"IBM Plex Mono",monospace; font-size:7pt; color:var(--muted);
+        text-transform:uppercase; letter-spacing:.08em; margin-bottom:5pt; }
+  .copy{ font-size:8.5pt; color:#2A2F36; margin:0 0 5pt; }
+  .notable{ font-size:8.5pt; border-top:.5pt dotted var(--rule); padding-top:4pt;
+            color:var(--ink); }
+  .notable b{ color:var(--accent); font-weight:600; }
+  .tags{ margin-top:4pt; }
+  .tag{ font-family:"IBM Plex Mono",monospace; font-size:6.5pt; border:.5pt solid var(--rule);
+        padding:1pt 4pt; margin-right:3pt; color:var(--muted); }
+
+  /* ---- mix table ---- */
+  table{ width:100%; border-collapse:collapse; font-size:8.5pt; }
+  th{ text-align:left; font-family:"IBM Plex Mono",monospace; font-size:6.5pt;
+      text-transform:uppercase; letter-spacing:.1em; color:var(--muted);
+      border-bottom:.75pt solid var(--ink); padding:0 6pt 3pt 0; }
+  td{ padding:4pt 6pt 4pt 0; border-bottom:.5pt solid var(--rule); vertical-align:top; }
+  td.name{ font-weight:600; white-space:nowrap; }
+  .mixbar{ display:inline-block; height:6pt; background:var(--ink); margin-right:4pt;
+           vertical-align:middle; }
+  .self td{ background:#FAF7F2; }
+
+  footer{ margin-top:18pt; border-top:.75pt solid var(--rule); padding-top:6pt;
+          font-family:"IBM Plex Mono",monospace; font-size:6.5pt; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="masthead-meta">
+    <span class="eyebrow">{{ brand }} · competitive creative</span>
+    <span class="eyebrow">{{ digest.generated_at.strftime('%d %b %Y') }} · {{ digest.window_days }}-day window</span>
+  </div>
+  <h1>What the competition <em>started saying</em> this week.</h1>
+  <div class="eyebrow">Meta &amp; LinkedIn ad libraries · {{ competitor_count }} advertisers tracked</div>
+</header>
+
+<div class="strip">
+  <div><span class="eyebrow">new creatives</span><b>{{ digest.new_count }}</b></div>
+  <div><span class="eyebrow">live &amp; tracked</span><b>{{ digest.active_count }}</b></div>
+  <div><span class="eyebrow">most active</span><b>{{ digest.velocity[0][0] if digest.velocity else '—' }}</b></div>
+  <div><span class="eyebrow">longest-running ad</span><b>{{ digest.proven[0].days_live if digest.proven else '—' }}d</b></div>
+</div>
+
+<h2>The read</h2>
+<div class="rule"></div>
+<div class="read">{{ synthesis_html|safe }}</div>
+
+{% if digest.proven %}
+<h2>Ads that have earned their keep</h2>
+<div class="sub">Live 21+ days. Nobody keeps paying for a creative that doesn't convert, so long runtime is the closest thing to a public performance signal.</div>
+<div class="rule"></div>
+{% for a in digest.proven[:6] %}
+  {% set c = a.classification %}
+  <div class="card">
+    <div class="spine">
+      <div class="code">{{ a.platform[:2]|upper }}<span>{{ c.angle|truncate(16,true,'') }}</span><span>{{ c.offer }}</span></div>
+      <div class="age">
+        <div class="bar" style="width:{{ [ (a.days_live or 0) / 2, 50 ]|min }}pt"></div>
+        <div class="n">{{ a.days_live }}d live</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="hook">{{ c.hook }}</p>
+      <div class="who">{{ a.competitor }} → {{ c.audience }}</div>
+      {% if c.proof_used %}<p class="copy"><b>Proof shown:</b> {{ c.proof_used|join(' · ') }}</p>{% endif %}
+      <div class="notable"><b>Take:</b> {{ c.notable }}</div>
+    </div>
+  </div>
+{% endfor %}
+{% endif %}
+
+{% if digest.all_new %}
+<h2>New this window</h2>
+<div class="sub">First seen since the last run, newest first.</div>
+<div class="rule"></div>
+{% for a in digest.all_new[:14] %}
+  {% set c = a.classification %}
+  <div class="card">
+    <div class="spine">
+      <div class="code">{{ a.platform[:2]|upper }}<span>{{ c.funnel_stage }}-funnel</span></div>
+      <div class="age"><div class="n">first seen<br>{{ a.first_seen or '—' }}</div></div>
+    </div>
+    <div class="card-body">
+      <p class="hook">{{ c.hook or a.headline }}</p>
+      <div class="who">{{ a.competitor }} → {{ c.audience }}</div>
+      <p class="copy">{{ (a.body or '')|truncate(240, true) }}</p>
+      <div class="tags">
+        <span class="tag">{{ c.angle }}</span>
+        <span class="tag">{{ c.offer }}</span>
+        {% if c.tone %}<span class="tag">{{ c.tone }}</span>{% endif %}
+      </div>
+      {% if c.notable and 'nothing notable' not in c.notable|lower %}
+      <div class="notable"><b>Take:</b> {{ c.notable }}</div>{% endif %}
+    </div>
+  </div>
+{% endfor %}
+{% endif %}
+
+<h2>Angle mix, all live creative</h2>
+<div class="sub">Where each advertiser is spending its argument. Gaps here are your opening.</div>
+<div class="rule"></div>
+<table>
+  <tr><th>Advertiser</th><th>Live</th><th>Angle distribution</th></tr>
+  {% for comp, mix in digest.angle_mix.items() %}
+  <tr class="{{ 'self' if comp == brand else '' }}">
+    <td class="name">{{ comp }}</td>
+    <td>{{ mix.values()|sum }}</td>
+    <td>
+      {% for angle, n in mix|dictsort(by='value', reverse=true) %}
+        <div><span class="mixbar" style="width:{{ n * 8 }}pt"></span>{{ angle }} <span style="color:#5C6470">({{ n }})</span></div>
+      {% endfor %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<footer>
+  Sources: Meta Ad Library, LinkedIn Ad Library. Collected {{ digest.generated_at.strftime('%Y-%m-%d %H:%M') }} UTC.
+  Runtime is a proxy signal, not reported spend. Classification by LLM — spot-check before quoting in a board deck.
+</footer>
+
+</body>
+</html>

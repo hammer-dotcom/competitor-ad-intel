@@ -1,0 +1,76 @@
+{
+  "manifest_version": "0.2",
+  "name": "competitor-ad-intel",
+  "display_name": "Competitor Ad Intel",
+  "version": "1.0.0",
+  "description": "Reads competitor ads from the Meta and LinkedIn ad libraries, labels every creative, and builds a branded digest.",
+  "long_description": "A scheduled-agent-turned-connector for competitive creative research. Scans the public Meta and LinkedIn ad libraries for a configured set of advertisers, has Claude classify each ad's hook, angle and offer against a fixed taxonomy, then renders a branded PDF digest. Treats ad runtime as a performance proxy: an ad live 60 days is an ad that works.",
+  "author": { "name": "Your Name", "url": "https://github.com/you/competitor-ad-intel" },
+  "homepage": "https://github.com/you/competitor-ad-intel",
+  "license": "MIT",
+  "keywords": ["competitive intelligence", "advertising", "marketing", "b2b"],
+  "server": {
+    "type": "python",
+    "entry_point": "src/mcp_server.py",
+    "mcp_config": {
+      "command": "python",
+      "args": ["-m", "src.mcp_server"],
+      "env": {
+        "APIFY_TOKEN": "${user_config.apify_token}",
+        "BRAND_NAME": "${user_config.brand_name}",
+        "SLACK_BOT_TOKEN": "${user_config.slack_bot_token}",
+        "SLACK_CHANNEL": "${user_config.slack_channel}",
+        "DB_PATH": "${__dirname}/data/ads.db",
+        "ADINTEL_CONFIG": "${__dirname}/config/competitors.yaml"
+      }
+    }
+  },
+  "tools": [
+    { "name": "list_tracked_advertisers", "description": "Show which advertisers are monitored." },
+    { "name": "add_advertiser", "description": "Add a competitor to the tracked set." },
+    { "name": "scan_ads", "description": "Read the public ad libraries and store what's found." },
+    { "name": "get_ads_to_classify", "description": "Fetch unlabelled ads plus the taxonomy." },
+    { "name": "save_classifications", "description": "Store the labels Claude produced." },
+    { "name": "get_digest", "description": "Aggregate findings: angle mix, velocity, long-runners." },
+    { "name": "build_report", "description": "Render the branded PDF digest." },
+    { "name": "post_digest_to_slack", "description": "Post the digest to a Slack channel." }
+  ],
+  "prompts": [
+    { "name": "weekly_digest", "description": "Run the whole loop: scan, label, analyse, render." },
+    { "name": "messaging_gap", "description": "Find unclaimed angles in the category." }
+  ],
+  "user_config": {
+    "apify_token": {
+      "type": "string",
+      "title": "Apify API token",
+      "description": "From apify.com → Settings → Integrations. The free tier covers normal use.",
+      "sensitive": true,
+      "required": true
+    },
+    "brand_name": {
+      "type": "string",
+      "title": "Your company name",
+      "description": "Appears on the digest masthead.",
+      "default": "Your Company",
+      "required": false
+    },
+    "slack_bot_token": {
+      "type": "string",
+      "title": "Slack bot token (optional)",
+      "description": "Only needed if you want digests posted to Slack. Scopes: chat:write, files:write.",
+      "sensitive": true,
+      "required": false
+    },
+    "slack_channel": {
+      "type": "string",
+      "title": "Slack channel",
+      "default": "#competitive-intel",
+      "required": false
+    }
+  },
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": ["darwin", "win32", "linux"],
+    "runtimes": { "python": ">=3.11" }
+  }
+}
