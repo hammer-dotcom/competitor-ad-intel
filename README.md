@@ -165,25 +165,23 @@ PDF, post to Slack, all in natural language. See [CONNECT.md](CONNECT.md).
 
 Three sharing shapes, in increasing effort:
 
-### Portfolio — a link a hiring manager can click
+### Public demo
 
 `python -m src.demo` runs the full pipeline off `demo/fixtures.json`, so a public
-deployment is real code, real document, invented data. The site shows a
-"Demo data" banner because pretending otherwise would be the one thing that
-actually costs you the job.
+deployment is real code, real document, invented data. The site shows a "Demo data" banner so nothing about the deployment is misleading.
 
 1. Make the repo public. Check history for leaked keys: `git log -p | grep -i "sk-ant\|apify_api"`.
 2. Settings → Pages → Source: **GitHub Actions**. Add repo variable `DEMO_SITE=true`.
 3. Run the `publish-site` workflow. You get `https://<user>.github.io/<repo>/`.
 
-### Team — a private link for a real competitor set
+### Private deployment
 
 Same publish step, real data, private hosting. Vercel with password protection
 or Cloudflare Pages + Access are the quickest routes to real auth. Or skip
 hosting entirely — the Slack digest already threads the PDF and Actions retains
 90 days of PDFs in run history.
 
-### Product — someone else runs it for their own set
+### Multi-tenant
 
 One YAML and one database per tenant, driven by env vars:
 
