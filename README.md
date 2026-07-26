@@ -1,6 +1,6 @@
 # Competitor Ad Intelligence Agent
 
-> **Live demo:** _add your GitHub Pages URL here after Step 2_
+> **Live demo:** [hammer-dotcom.github.io/competitor-ad-intel](https://hammer-dotcom.github.io/competitor-ad-intel/)
 > **60-sec video:** _add your Loom link here_
 > **Connect it to Claude:** see [CONNECT.md](CONNECT.md)
 
