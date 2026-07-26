@@ -1,41 +1,50 @@
-# Every competitor you want tracked.
-# Meta page IDs come from the Ad Library URL: facebook.com/ads/library/?view_all_page_id=XXXX
-# LinkedIn uses the company slug from linkedin.com/company/<slug>.
+# Configure your competitor set here. Meta page IDs come from the Ad Library URL
+# (facebook.com/ads/library/?view_all_page_id=XXXX). LinkedIn uses the company slug
+# from linkedin.com/company/<slug>.
+#
+# This example is set up for a hypothetical project management SaaS tracking the
+# major players. Swap in your own set — the pipeline is competitor-agnostic.
+
 brand:
-  name: "Submit.com"
+  name: "Your Brand"
   meta_page_ids: []
-  linkedin_slugs: ["submit-com"]
+  linkedin_slugs: []
 
 defaults:
-  # redact: {"Real Client Name": "Competitor A"}   # see note at the foot of this file
-  countries: ["GB", "IE", "US"]
+  countries: ["US", "GB", "DE"]
   lookback_days: 30
   max_ads_per_competitor: 60
+  # redact: {"Real Competitor Name": "Competitor A"}   # see note at end of file
 
 competitors:
-  - name: "SmartSimple"
-    linkedin_slugs: ["smartsimple-software"]
+  - name: "Notion"
+    linkedin_slugs: ["notionhq"]
     meta_page_ids: []
-    category: "grant management"
-  - name: "Submittable"
-    linkedin_slugs: ["submittable"]
-    meta_page_ids: []
-    category: "grant + awards management"
-  - name: "OpenWater"
-    linkedin_slugs: ["openwater"]
-    meta_page_ids: []
-    category: "awards + abstracts"
-  - name: "Award Force"
-    linkedin_slugs: ["award-force"]
-    meta_page_ids: []
-    category: "awards management"
-  - name: "Good Grants"
-    linkedin_slugs: ["good-grants"]
-    meta_page_ids: []
-    category: "grant management"
+    category: "docs + project management"
 
-# Optional. Any key found in published HTML is replaced by its value before the file
-# is written. Use it when the repo is public but the competitor set belongs to a client.
+  - name: "Asana"
+    linkedin_slugs: ["asana"]
+    meta_page_ids: []
+    category: "project management"
+
+  - name: "ClickUp"
+    linkedin_slugs: ["clickup"]
+    meta_page_ids: []
+    category: "project management"
+
+  - name: "Monday.com"
+    linkedin_slugs: ["mondaydotcom"]
+    meta_page_ids: []
+    category: "work management"
+
+  - name: "Linear"
+    linkedin_slugs: ["linear"]
+    meta_page_ids: []
+    category: "issue tracking + product ops"
+
+# Optional: any key found in published HTML is replaced by its value before the
+# file is written. Use it when the repo is public but the competitor set is
+# proprietary — the published site never contains the real names.
+#
 # redact:
-#   "Acme Grants Ltd": "Competitor A"
-#   "Beta Awards":     "Competitor B"
+#   "Real Competitor Ltd": "Competitor A"

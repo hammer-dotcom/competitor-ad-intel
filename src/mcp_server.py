@@ -129,10 +129,10 @@ def list_tracked_advertisers() -> dict[str, Any]:
 
 @mcp.tool()
 def add_advertiser(
-    name: Annotated[str, Field(description="Display name, e.g. 'Award Force'.")],
+    name: Annotated[str, Field(description="Display name, e.g. 'Notion'.")],
     linkedin_slug: Annotated[str, Field(description="Tail of linkedin.com/company/<slug>. Empty if they don't advertise there.")] = "",
     meta_page_id: Annotated[str, Field(description="view_all_page_id from the Meta Ad Library URL. Empty if none.")] = "",
-    category: Annotated[str, Field(description="Free-text grouping, e.g. 'grant management'.")] = "",
+    category: Annotated[str, Field(description="Free-text grouping, e.g. 'project management'.")] = "",
 ) -> str:
     """Add an advertiser to the tracked set, writing it into the config file.
 

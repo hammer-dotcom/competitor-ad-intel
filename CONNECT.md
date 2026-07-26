@@ -108,8 +108,8 @@ have conversations like:
 > Which of my competitors has never run a compliance-security angle? What are they leaning
 > on instead?
 
-> The Award Force ad about "judging season" — is that still live, and how does it compare
-> to what SmartSimple ran the same week?
+> The Notion ad about "judging season" — is that still live, and how does it compare
+> to what ClickUp ran the same week?
 
 > Draft three test creatives for me that occupy the angle nobody in the tracked set is
 > using right now.
