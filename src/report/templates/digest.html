@@ -62,7 +62,7 @@
           padding:8pt 7pt; background:#F7F8F8; }
   .code{ font-family:"IBM Plex Mono",monospace; font-size:6.5pt; letter-spacing:.06em;
          color:var(--ink); text-transform:uppercase; line-height:1.5; }
-  .code span{ display:block; color:var(--muted); }
+  .code span{ display:block; color:var(--muted); word-break:break-word; }
   .age{ margin-top:7pt; }
   .age .bar{ height:3pt; background:var(--warm); }
   .age .n{ font-family:"IBM Plex Mono",monospace; font-size:6.5pt; color:var(--muted);
@@ -126,7 +126,7 @@
   {% set c = a.classification %}
   <div class="card">
     <div class="spine">
-      <div class="code">{{ a.platform[:2]|upper }}<span>{{ c.angle|truncate(16,true,'') }}</span><span>{{ c.offer }}</span></div>
+      <div class="code">{{ a.platform[:2]|upper }}<span>{{ c.angle }}</span><span>{{ c.offer }}</span></div>
       <div class="age">
         <div class="bar" style="width:{{ [ (a.days_live or 0) / 2, 50 ]|min }}pt"></div>
         <div class="n">{{ a.days_live }}d live</div>
@@ -143,8 +143,8 @@
 {% endif %}
 
 {% if digest.all_new %}
-<h2>New this window</h2>
-<div class="sub">First seen since the last run, newest first.</div>
+<h2>{{ 'Tracked creatives — first sync' if digest.new_count == digest.active_count else 'New this window' }}</h2>
+<div class="sub">{{ 'Every live creative found on the first run against an empty database.' if digest.new_count == digest.active_count else 'First seen since the last run, newest first.' }}</div>
 <div class="rule"></div>
 {% for a in digest.all_new[:14] %}
   {% set c = a.classification %}
