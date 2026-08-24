@@ -1,7 +1,5 @@
 # Competitor Ad Intelligence Agent
 
-> **Live demo:** [hammer-dotcom.github.io/competitor-ad-intel](https://hammer-dotcom.github.io/competitor-ad-intel/)
-> **60-sec video:** _add your Loom link here_
 > **Connect it to Claude:** see [CONNECT.md](CONNECT.md)
 
 A scheduled agent that reads the Meta and LinkedIn ad libraries for a set of
@@ -124,8 +122,7 @@ Push to GitHub. The workflow in `.github/workflows/weekly.yml` runs Mondays at
 - **Variables:** `SLACK_CHANNEL`, `BRAND_NAME`
 
 To publish the archive site to GitHub Pages, enable Pages under
-Settings → Pages → Source: GitHub Actions, and set variable `DEMO_SITE=true`
-(demo mode, safe for public) or `false` (real data, use with private hosting).
+Settings → Pages → Source: GitHub Actions.
 
 ---
 
@@ -161,54 +158,6 @@ The repo ships an MCP server. Install once and Claude Desktop can drive the
 whole pipeline in conversation — scan advertisers, spot angle gaps, render the
 PDF, post to Slack, all in natural language. See [CONNECT.md](CONNECT.md).
 
-## Making it shareable
-
-Three sharing shapes, in increasing effort:
-
-### Public demo
-
-`python -m src.demo` runs the full pipeline off `demo/fixtures.json`, so a public
-deployment is real code, real document, invented data. The site shows a "Demo data" banner so nothing about the deployment is misleading.
-
-1. Make the repo public. Check history for leaked keys: `git log -p | grep -i "sk-ant\|apify_api"`.
-2. Settings → Pages → Source: **GitHub Actions**. Add repo variable `DEMO_SITE=true`.
-3. Run the `publish-site` workflow. You get `https://<user>.github.io/<repo>/`.
-
-### Private deployment
-
-Same publish step, real data, private hosting. Vercel with password protection
-or Cloudflare Pages + Access are the quickest routes to real auth. Or skip
-hosting entirely — the Slack digest already threads the PDF and Actions retains
-90 days of PDFs in run history.
-
-### Multi-tenant
-
-One YAML and one database per tenant, driven by env vars:
-
-```bash
-for t in config/tenants/*.yaml; do
-  name=$(basename "$t" .yaml)
-  DB_PATH="data/$name.db" \
-  SLACK_CHANNEL="#intel-$name" \
-  BRAND_NAME="$name" \
-  python -m src.main run --window 7 --slack --publish --site "site/$name"
-done
-```
-
-### Redaction
-
-If the repo is public but the tracked set is proprietary, add a map under
-`defaults:` in `config/competitors.yaml`:
-
-```yaml
-defaults:
-  redact:
-    "Real Competitor Ltd": "Competitor A"
-```
-
-Every occurrence is replaced before anything is written to `site/`, so the
-published HTML never contains the real name.
-
 ---
 
 ## Known sharp edges
@@ -238,7 +187,7 @@ src/analyze.py                  aggregation: mix, velocity, days-live, proven ad
 src/report/templates/digest.html   the branded document
 src/report/render.py            Jinja → HTML → PDF
 src/report/slack.py             Block Kit digest + threaded PDF
-src/publish.py                  builds the static archive site, with redaction
+src/publish.py                  builds the static archive site
 src/report/templates/index.html   the public archive index
 src/main.py                     CLI: fetch / classify / report / run
 src/demo.py                     offline demo from fixtures, no keys required
